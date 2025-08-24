@@ -49,7 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         positionStyles = 'bottom: 20px; right: 20px;' // bottom-right default
     }
 
-    const badgeSnippet = \`<div id="systeme-badge" style="position: fixed; \${positionStyles} z-index: 9999;">
+const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index: 9999;">
   <style>
     #systeme-badge {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -57,7 +57,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .systeme-badge-container {
       display: flex;
       align-items: center;
-      background: linear-gradient(135deg, \${color1}, \${color2});
+      background: linear-gradient(135deg, ${color1}, ${color2});
       border-radius: 25px;
       padding: 8px 8px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -98,14 +98,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
   </style>
   <div class="systeme-badge-wrapper">
-    <a href="\${link}" target="_blank" rel="noopener noreferrer" class="systeme-badge-container">
+    <a href="${link}" target="_blank" rel="noopener noreferrer" class="systeme-badge-container">
       <svg class="systeme-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
       </svg>
-      <span class="systeme-badge-text">\${text}</span>
+      <span class="systeme-badge-text">${text}</span>
     </a>
   </div>
-</div>\`
+</div>`
+
     setBadgeCode(badgeSnippet)
   }
 
