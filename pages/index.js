@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState } from 'react'
 
 export default function Home() {
@@ -111,6 +112,25 @@ const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${position
   }
 
   return (
+  <>
+    <Head>
+      <title>Jasman Digital Badge Generator | Floating Corner Badges with Tracking</title>
+      <meta name="description" content="Generate floating website badges for any corner. Add links, colors, and GA4/GTM tracking — copy-paste ready for Systeme.io or any website." />
+
+      {/* Open Graph for social previews */}
+      <meta property="og:title" content="Jasman Digital Badge Generator" />
+      <meta property="og:description" content="Create floating corner badges with tracking, colors, and links. Perfect for travel agents and small businesses." />
+      <meta property="og:image" content="https://jasman-badge-generator.vercel.app/og-preview.png" />
+      <meta property="og:url" content="https://jasman-badge-generator.vercel.app" />
+      <meta property="og:type" content="website" />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Jasman Digital Badge Generator" />
+      <meta name="twitter:description" content="Create floating corner badges with tracking, colors, and links. Perfect for travel agents and small businesses." />
+      <meta name="twitter:image" content="https://jasman-badge-generator.vercel.app/og-preview.png" />
+    </Head>
+
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-2xl font-bold mb-6">Jasman Digital Badge Generator (v3)</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
