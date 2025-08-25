@@ -11,8 +11,14 @@ export default function Home() {
   const [corner, setCorner] = useState('bottom-right')
   const [logoUrl, setLogoUrl] = useState('')
   const [badgeCode, setBadgeCode] = useState('')
+  const [generatedCode, setGeneratedCode] = useState('')
   const [trackingCode, setTrackingCode] = useState('')
-  const [message, setMessage] = useState('') // ✅ Status messages
+  const [toast, setToast] = useState('') // ✅ Toast message
+
+  const showToast = (msg) => {
+    setToast(msg)
+    setTimeout(() => setToast(''), 2500) // hide after 2.5s
+  }
 
   const generateCode = () => {
     let trackingSnippet = ''
@@ -56,25 +62,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       ? `<img src="${logoUrl}" alt="Logo" style="height:20px;width:auto;margin-right:8px;" />`
       : ''
 
+    // 🔹 Live preview (relative)
+    const liveBadge = `<div style="position: relative; ${positionStyles}">
+      <a href="${link}" target="_blank" rel="noopener noreferrer"
+        style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
+        ${logoSnippet}
+        <span>${text}</span>
+      </a>
+    </div>`
+
+    // 🔹 Generated code (fixed)
     const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index: 9999;">
-  <a href="${link}" target="_blank" rel="noopener noreferrer"
-    style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
-    ${logoSnippet}
-    <span>${text}</span>
-  </a>
-</div>`
+      <a href="${link}" target="_blank" rel="noopener noreferrer"
+        style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
+        ${logoSnippet}
+        <span>${text}</span>
+      </a>
+    </div>`
 
-    setBadgeCode(badgeSnippet)
+    setBadgeCode(liveBadge)        
+    setGeneratedCode(badgeSnippet) 
 
-    // ✅ Show confirmation
-    setMessage('✅ Badge generated successfully!')
-    setTimeout(() => setMessage(''), 2500)
+    showToast('✅ Badge generated successfully!')
   }
 
   const copyToClipboard = (content, type) => {
     navigator.clipboard.writeText(content)
-    setMessage(type === 'badge' ? '✅ Badge code copied!' : '✅ Tracking script copied!')
-    setTimeout(() => setMessage(''), 2000)
+    showToast(type === 'badge' ? '✅ Badge code copied!' : '✅ Tracking script copied!')
   }
 
   return (
@@ -93,8 +107,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="twitter:image" content="https://jasman-badge-generator.vercel.app/og-preview.png" />
       </Head>
 
-      <div className="min-h-screen bg-gray-100 p-6">
-        <h1 className="text-2xl font-bold mb-6">Jasman Digital Badge Generator (v3)</h1>
+      <div className="min-h-screen bg-gray-100 p-6 relative">
+        <h1 className="text-2xl font-bold mb-6">Jasman Digital Badge Generator</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           <div className="space-y-4">
@@ -161,8 +175,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div className="border p-4 rounded min-h-[80px] flex items-center justify-center bg-white" dangerouslySetInnerHTML={{ __html: badgeCode }} />
             
             <label className="block font-medium mt-6">Badge Code (paste in a Systeme.io Custom Code block)</label>
-            <textarea readOnly value={badgeCode} className="w-full h-64 border p-2 rounded mt-2" />
-            <button onClick={() => copyToClipboard(badgeCode, 'badge')} className="mt-2 bg-green-600 text-white px-4 py-2 rounded">
+            <textarea readOnly value={generatedCode} className="w-full h-64 border p-2 rounded mt-2" />
+            <button onClick={() => copyToClipboard(generatedCode, 'badge')} className="mt-2 bg-green-600 text-white px-4 py-2 rounded">
               Copy Badge Code
             </button>
           </div>
@@ -178,8 +192,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         )}
 
-        {message && (
-          <div className="mt-4 text-green-700 font-semibold">{message}</div>
+        {/* ✅ Toast Notification */}
+        {toast && (
+          <div className="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg animate-fadeIn">
+            {toast}
+          </div>
         )}
 
         <div className="mt-8 p-4 bg-white border rounded">
@@ -198,7 +215,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <a href="https://systeme.io/?sa=sa01243563803522812a96e1f1aa411b33830c7433" 
                target="_blank" rel="noopener noreferrer" 
                className="ml-2 inline-block bg-blue-600 text-white px-2 py-1 rounded text-sm">
-              Get FREE (forever!) Systeme Funnel & Website. No Credit Card Needed!
+              Get FREE (forever!) Systeme Funnel & Website. No credit card needed!
             </a>
           </h3>
           <ul className="list-disc ml-6 space-y-1">
@@ -212,6 +229,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p>In Google Tag Manager, copy your Container ID (format GTM-XXXX). Paste it in the generator. Inside GTM, add a GA4 tag if you want more advanced analytics.</p>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+      `}</style>
     </>
   )
 }
