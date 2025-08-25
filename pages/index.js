@@ -111,7 +111,7 @@ const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${position
     setBadgeCode(badgeSnippet)
   }
 
-  return (
+return (
   <>
     <Head>
       <title>Jasman Digital Badge Generator | Floating Corner Badges with Tracking</title>
