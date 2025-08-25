@@ -11,8 +11,9 @@ export default function Home() {
   const [corner, setCorner] = useState('bottom-right')
   const [badgeCode, setBadgeCode] = useState('')
   const [trackingCode, setTrackingCode] = useState('')
+  const [livePreview, setLivePreview] = useState('')
 
-  // 🔹 Live preview updater
+  // 🔹 Live Preview updater
   useEffect(() => {
     let positionStyles = ''
     switch (corner) {
@@ -29,14 +30,25 @@ export default function Home() {
         positionStyles = 'bottom: 20px; right: 20px;'
     }
 
-const liveBadge = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index:9999;">
+    // Preview version (relative, stays in box)
+    const previewSnippet = `<div style="position: relative; ${positionStyles}">
+      <a href="${link}" target="_blank" rel="noopener noreferrer"
+        style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
+        <span>${text}</span>
+      </a>
+    </div>`
+
+    setLivePreview(previewSnippet)
+
+    // Generated code (fixed, floats on site)
+    const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index:9999;">
   <a href="${link}" target="_blank" rel="noopener noreferrer"
     style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
     <span>${text}</span>
   </a>
 </div>`
 
-    setBadgeCode(liveBadge)
+    setBadgeCode(badgeSnippet)
   }, [link, text, color1, color2, corner])
 
   const generateCode = () => {
@@ -162,7 +174,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <div
                 className="relative w-full h-40 border rounded bg-gray-50 flex items-center justify-center"
                 style={{ minHeight: '120px' }}
-                dangerouslySetInnerHTML={{ __html: badgeCode }}
+                dangerouslySetInnerHTML={{ __html: livePreview }}
               />
             </div>
 
