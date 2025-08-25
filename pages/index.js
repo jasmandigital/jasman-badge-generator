@@ -29,12 +29,12 @@ export default function Home() {
         positionStyles = 'bottom: 20px; right: 20px;'
     }
 
-    const liveBadge = `<div id="systeme-badge" style="position: relative; ${positionStyles}">
-      <a href="${link}" target="_blank" rel="noopener noreferrer"
-        style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:6px 12px;color:white;text-decoration:none;font-family:sans-serif;font-weight:600;box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-        <span>${text}</span>
-      </a>
-    </div>`
+const liveBadge = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index:9999;">
+  <a href="${link}" target="_blank" rel="noopener noreferrer"
+    style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:10px 16px;color:white;text-decoration:none;font-family:Georgia,serif;font-size:20px;font-weight:bold;box-shadow:0 4px 6px rgba(0,0,0,0.2);">
+    <span>${text}</span>
+  </a>
+</div>`
 
     setBadgeCode(liveBadge)
   }, [link, text, color1, color2, corner])
