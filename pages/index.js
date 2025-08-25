@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [link, setLink] = useState('https://example.com')
@@ -11,6 +11,33 @@ export default function Home() {
   const [corner, setCorner] = useState('bottom-right')
   const [badgeCode, setBadgeCode] = useState('')
   const [trackingCode, setTrackingCode] = useState('')
+
+  // 🔹 Live preview updater
+  useEffect(() => {
+    let positionStyles = ''
+    switch (corner) {
+      case 'bottom-left':
+        positionStyles = 'bottom: 20px; left: 20px;'
+        break
+      case 'top-right':
+        positionStyles = 'top: 20px; right: 20px;'
+        break
+      case 'top-left':
+        positionStyles = 'top: 20px; left: 20px;'
+        break
+      default:
+        positionStyles = 'bottom: 20px; right: 20px;'
+    }
+
+    const liveBadge = `<div id="systeme-badge" style="position: relative; ${positionStyles}">
+      <a href="${link}" target="_blank" rel="noopener noreferrer"
+        style="display:flex;align-items:center;background:linear-gradient(135deg,${color1},${color2});border-radius:25px;padding:6px 12px;color:white;text-decoration:none;font-family:sans-serif;font-weight:600;box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+        <span>${text}</span>
+      </a>
+    </div>`
+
+    setBadgeCode(liveBadge)
+  }, [link, text, color1, color2, corner])
 
   const generateCode = () => {
     let trackingSnippet = ''
@@ -34,86 +61,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>`
     }
     setTrackingCode(trackingSnippet)
-
-    let positionStyles = ''
-    switch (corner) {
-      case 'bottom-left':
-        positionStyles = 'bottom: 20px; left: 20px;'
-        break
-      case 'top-right':
-        positionStyles = 'top: 20px; right: 20px;'
-        break
-      case 'top-left':
-        positionStyles = 'top: 20px; left: 20px;'
-        break
-      default:
-        positionStyles = 'bottom: 20px; right: 20px;' // bottom-right default
-    }
-
-    const badgeSnippet = `<div id="systeme-badge" style="position: fixed; ${positionStyles} z-index: 9999;">
-  <style>
-    #systeme-badge {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    .systeme-badge-container {
-      display: flex;
-      align-items: center;
-      background: linear-gradient(135deg, ${color1}, ${color2});
-      border-radius: 25px;
-      padding: 8px 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: white;
-      overflow: hidden;
-      max-width: 40px;
-    }
-    .systeme-badge-container:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-      max-width: 200px;
-      padding: 8px 12px;
-    }
-    .systeme-badge-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 0;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-    .systeme-badge-container:hover .systeme-badge-icon {
-      margin-right: 8px;
-    }
-    .systeme-badge-text {
-      font-size: 18px;
-      font-weight: 600;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s ease;
-    }
-    .systeme-badge-container:hover .systeme-badge-text {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  </style>
-  <div class="systeme-badge-wrapper">
-    <a href="${link}" target="_blank" rel="noopener noreferrer" class="systeme-badge-container">
-      <svg class="systeme-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
-      </svg>
-      <span class="systeme-badge-text">${text}</span>
-    </a>
-  </div>
-</div>`
-    setBadgeCode(badgeSnippet)
   }
 
   return (
     <>
       <Head>
-        <title>Digital Badge Generator | Floating Corner Badges with Tracking</title>
+        <title>Jasman Digital Badge Generator | Floating Corner Badges with Tracking</title>
         <meta
           name="description"
           content="Generate floating website badges for any corner. Add links, colors, and GA4/GTM tracking — copy-paste ready for Systeme.io or any website."
@@ -123,7 +76,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div className="min-h-screen bg-gray-100 p-6">
         <h1 className="text-2xl font-bold mb-6">Jasman Digital Badge Generator (v3)</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left Panel: Inputs */}
+          {/* Left Panel */}
           <div className="space-y-4">
             <div>
               <label className="block font-medium">Affiliate / Funnel Link</label>
@@ -201,13 +154,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </button>
           </div>
 
-          {/* Right Panel: Preview + Outputs */}
+          {/* Right Panel */}
           <div>
             {/* Live Badge Preview */}
             <div className="mb-6">
               <label className="block font-medium mb-2">Live Preview</label>
               <div
-                className="relative w-full h-40 border rounded bg-white flex items-center justify-center"
+                className="relative w-full h-40 border rounded bg-gray-50 flex items-center justify-center"
                 style={{ minHeight: '120px' }}
                 dangerouslySetInnerHTML={{ __html: badgeCode }}
               />
@@ -235,11 +188,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <label className="block font-medium mt-6">
               Badge Code (paste in a Systeme.io Custom Code block)
             </label>
-            <textarea
-              readOnly
-              value={badgeCode}
-              className="w-full h-64 border p-2 rounded mt-2"
-            />
+            <textarea readOnly value={badgeCode} className="w-full h-64 border p-2 rounded mt-2" />
             <button
               onClick={() => navigator.clipboard.writeText(badgeCode)}
               className="mt-2 bg-green-600 text-white px-4 py-2 rounded"
@@ -249,7 +198,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
 
-        {/* How to Use Section */}
+        {/* How to Use */}
         <div className="mt-8 p-4 bg-white border rounded">
           <h2 className="text-lg font-bold mb-2">How to Use</h2>
           <ol className="list-decimal ml-6 space-y-2">
@@ -261,14 +210,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li>Click Generate Code.</li>
           </ol>
 
-          {/* Affiliate CTA Button moved on top */}
+          {/* CTA button above Implementation */}
           <a
             href="https://systeme.io/?sa=sa01243563803522812a96e1f1aa411b33830c7433"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-4 mb-4 bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
           >
-            Get FREE (forever!) Systeme Funnel &amp; Website System - No Credit Card Needed!
+            Get FREE Systeme Funnel &amp; Website System — No Credit Card Needed!
           </a>
 
           <h3 className="font-semibold">Systeme.io Implementation</h3>
