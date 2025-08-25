@@ -236,6 +236,7 @@ return (
         <h3 className="font-semibold mt-4">GTM Setup</h3>
         <p>In Google Tag Manager, copy your Container ID (format GTM-XXXX). Paste it in the generator. Inside GTM, add a GA4 tag if you want more advanced analytics.</p>
       </div>
-    </div>
-  )
+     </div>
+  </>
+)
 }
