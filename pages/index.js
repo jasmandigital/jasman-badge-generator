@@ -217,16 +217,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li>(Optional) Choose Tracking Option: GA4 or GTM, and enter your ID.</li>
             <li>Click Generate Code.</li>
           </ol>
+
           <h3 className="font-semibold mt-4">Systeme.io Implementation</h3>
-          <ul className="list-disc ml-6 space-y-1">
+          <a
+            href="https://systeme.io/?sa=sa01243563803522812a96e1f1aa411b33830c7433"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Get FREE Systeme Funnel &amp; Website System — No Credit Card Needed!
+          </a>
+
+          <ul className="list-disc ml-6 space-y-1 mt-4">
             <li>Copy Tracking Script → go to Systeme.io → Settings → SEO/Analytics → Header Scripts → Paste there.</li>
             <li>Copy Badge Code → add a Custom Code Block on your page → Paste there.</li>
             <li>Save and publish your page.</li>
           </ul>
+
           <h3 className="font-semibold mt-4">GA4 Setup</h3>
-          <p>In Google Analytics, go to Admin → Data Streams → Web → copy your Measurement ID (starts with G-). Paste it in the generator.</p>
+          <p>
+            In Google Analytics, go to Admin → Data Streams → Web → copy your Measurement ID
+            (starts with G-). Paste it in the generator.
+          </p>
+
           <h3 className="font-semibold mt-4">GTM Setup</h3>
-          <p>In Google Tag Manager, copy your Container ID (format GTM-XXXX). Paste it in the generator. Inside GTM, add a GA4 tag if you want more advanced analytics.</p>
+          <p>
+            In Google Tag Manager, copy your Container ID (format GTM-XXXX). Paste it in the
+            generator. Inside GTM, add a GA4 tag if you want more advanced analytics.
+          </p>
         </div>
       </div>
     </>
